@@ -1,9 +1,14 @@
 var round=1;
 var pat=[];
+var hpat=[];
 var note=0;
 var speed = 1500;
 var restoreDelay = 300;
 var nextRoundDelay = 2000;
+var hExtraSelectionTime = 300; // Human can have hpExtraSelectionTime than the time used for the pc 
+var playing = false;
+var cPlayPatternClock;
+var cNextRoundClock;
 
 $(document).ready(function(){
     
@@ -19,20 +24,41 @@ $(document).ready(function(){
     //audioElement.load()
     $.get();
 
+    function hPlay(i){
+        if(playing){
+            hpat.push(i);
+            if(hpat.length > pat.length){
+                gameOver("too many presses!");
+                return;
+            }    
+            for(i=0; i < hpat.length; ++i){
+                if(hpat[i]!=pat[i]){
+                    gameOver("you made a mistake!");
+                    return;
+                }
+            }           
+        }
+    }
+    
+
     $("#s1").click(function(){
        sectorSelect(1);
+       hPlay(1);
     });
     
     $("#s2").click(function(){
         sectorSelect(2);
+        hPlay(2);        
     });
     
     $("#s3").click(function(){
         sectorSelect(3);
+        hPlay(3);
     });
     
     $("#s4").click(function(){
         sectorSelect(4);
+        hPlay(4);
     });
 
     function sectorSelect(i){
@@ -51,33 +77,52 @@ $(document).ready(function(){
        pat.push(Math.floor((Math.random()*4)+1));
     }
 
-    function playPattern(){
+   function playPattern(){
         if(note < pat.length){
             sectorSelect(pat[note]);
             ++note;
-            setTimeout(playPattern, speed);
+            cPlayPatternClock = setTimeout(playPattern, speed);
         }
         else{
-           setTimeout(nextRound, nextRoundDelay);
+           cNextRoundClock = setTimeout(nextRound, (hExtraSelectionTime + speed) * round );
         }
     }
     
     function reset(){
+        window.clearTimeout(cPlayPatternClock);
+        window.clearTimeout(cNextRoundClock);
+
+        playing = false;
         note=0;
         round=1;
         pat.length = 0;
     }
 
     function nextRound(){
+        if(hpat.length < pat.length){
+            gameOver("too slow...");
+            return;
+        }    
         note=0;
         ++round;
         play();
     } 
     
     function play(){
+        playing = true;
+        hpat.length = 0;
         $("#round").text("Round: " + round);
         pattern();
         playPattern();
     }
-   reset();
+       
+    function gameOver(msg){
+        r=round;
+        reset();
+        alert("Game over " + msg + " you made to round " + r);
+
+    }
+
+    
+    reset();
 });
