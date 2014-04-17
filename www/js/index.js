@@ -2,9 +2,9 @@ var round=1;
 var pat=[];
 var hpat=[];
 var note=0;
-var speed = 1500;
+var speed = 1000;
 var restoreDelay = 300;
-var nextRoundDelay = 2000;
+var nextRoundDelay = 1000;
 var hExtraSelectionTime = 300; // Human can have hpExtraSelectionTime than the time used for the pc 
 var playing = false;
 var cPlayPatternClock;
@@ -149,7 +149,7 @@ var app = {
         //alert("Te amo Amorzinha, minha Bebê");
         //app.receivedEvent('deviceready');
          gameInit();
-    }
+        }
 };
 
 
