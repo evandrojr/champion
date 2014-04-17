@@ -13,13 +13,13 @@ var cNextRoundClock;
 function gameInit(){
     
     var ae1 = document.createElement('audio');
-    ae1.setAttribute('src', 'media/hat.wav');
+    ae1.setAttribute('src', '../media/hat.wav');
     var ae2 = document.createElement('audio');
-    ae2.setAttribute('src', 'media/kick.wav');
+    ae2.setAttribute('src', '../media/kick.wav');
     var ae3 = document.createElement('audio');
-    ae3.setAttribute('src', 'media/crash.wav');
+    ae3.setAttribute('src', '../media/crash.wav');
     var ae4 = document.createElement('audio');
-    ae4.setAttribute('src', 'media/rim.wav');
+    ae4.setAttribute('src', '../media/rim.wav');
     
     //audioElement.load()
     $.get();
@@ -146,7 +146,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        alert("Relaxe jr");
+        alert("Te amo Amorzinha, minha Bebê");
         //app.receivedEvent('deviceready');
          gameInit();
         
